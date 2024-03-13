@@ -11,6 +11,26 @@
           padding: 13px 20px;
           font-size:16px;
         }
+
+        #carousel li img {
+            max-height:300px;
+        }
+
+        #carousel {
+            list-style-type: none;
+            position: relative;
+            display:flex;
+            flex-direction:row;
+            width:225px;
+            overflow:hidden;
+            padding:0;
+        }
+
+        #carousel li {
+            display: flex;
+            flex-direction:column;
+            align-items: center;
+        }
       </style>
 
 <script>
@@ -23,19 +43,89 @@
 // you can use local files or images stored on the web if you want.
 
 // write functions that present it as a slideshow
+ let imageList = [
+    "images/chard.jpg",
+    "images/ice.jpg",
+    "images/peppers.jpg",
+    "images/teaguy.jpg"
+];
 
+ let captions = [
+    "Chard from the garden", "Ice", "Peppers from the garden", "A tea guy"
+];
+    let index = 0;
 
+function setup(){
+    showSlide(1);
+    document.getElementById("prev").onclick = previous;
+    document.getElementById("next").onclick = next; 
+    document.getElementById("back").onclick = carouselBack;
+    document.getElementById("forward").onclick = carouselForward;
+ }
+
+function showSlide(index){
+    document.getElementById("main").setAttribute("src",imageList[index] );
+    document.getElementById("caption").innerText = captions[index];
+}
+
+function previous(){
+    if (index == 0 ){
+        index = imageList.length - 1;
+    } else { 
+        index--; 
+    }
+    showSlide(index);
+}
+
+function next(){
+    if (index == imageList.length - 1 ){
+        index = 0;
+    } else { 
+        index++; 
+    }
+    showSlide(index); 
+}
+
+function carouselForward(){
+    carousel = document.getElementById("carousel");
+    slide = carousel.firstElementChild;
+    slide.remove();
+    carousel.append(slide);
+
+}
+
+function carouselBack(){
+    carousel = document.getElementById("carousel");
+    slide = carousel.lastElementChild;
+    slide.remove();
+    carousel.prepend(slide);
+}
+
+window.onload = setup;
 </script>
 </head>
 
 <h1>My Photo Slideshow is cool</h1>
+
+
+<ul id="carousel">
+    <li><img src="images/peppers.jpg"><span class="caption">Peppers from my garden</span></li>
+    <li><img src="images/teaguy.jpg"><span class="caption">Teaguy</span></li>
+    <li><img src="images/ice.jpg"><span class="caption">Ice</span></li>
+    <li><img src="images/chard.jpg"><span class="caption">Chard from the garden</span></li>    
+</ul>
+<button id="back">Back</button>
+<button id="forward">Forward</button>
+<hr>
 
 <img id="main" height="300" />
 <br />
 <p id="caption">Caption</p>
 
 <br />
-<button id="prev">&laquo;</button>
-<button id="next">&raquo;</button>
+<button id="prev">&laquo; Prev</button>
+<button id="next">Next &raquo; </button>
+
+<hr>
 
 </html>
